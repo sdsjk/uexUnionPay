@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uexplugins>
+    <plugin
+        className="org.zywx.wbpalmstar.plugin.uexunionpay.EUExUnionPay" uexName="uexUnionPay" >
+        <method name="startPay" type="1" params="orderInfo"/>
+</plugin>
+</uexplugins>
