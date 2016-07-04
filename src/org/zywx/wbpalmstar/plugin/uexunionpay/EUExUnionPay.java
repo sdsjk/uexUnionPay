@@ -15,7 +15,7 @@ import org.zywx.wbpalmstar.plugin.uexunionpay.vo.ResultPayVO;
 public class EUExUnionPay extends EUExBase {
 
     private static final String BUNDLE_DATA = "data";
-    private static final int MSG_START_PAY = 1;
+    private int mCallbackId = -1;
 
     public EUExUnionPay(Context context, EBrowserView eBrowserView) {
         super(context, eBrowserView);
@@ -28,20 +28,6 @@ public class EUExUnionPay extends EUExBase {
 
 
     public void startPay(String[] params) {
-        if (params == null || params.length < 1) {
-            errorCallback(0, 0, "error params!");
-            return;
-        }
-        Message msg = new Message();
-        msg.obj = this;
-        msg.what = MSG_START_PAY;
-        Bundle bd = new Bundle();
-        bd.putStringArray(BUNDLE_DATA, params);
-        msg.setData(bd);
-        mHandler.sendMessage(msg);
-    }
-
-    private void startPayMsg(String[] params) {
         String json = params[0];
         PayDataVO dataVO = DataHelper.gson.fromJson(json, PayDataVO.class);
         if (TextUtils.isEmpty(dataVO.getOrderInfo()) ||
@@ -49,26 +35,13 @@ public class EUExUnionPay extends EUExBase {
             errorCallback(0,0, "error params");
             return;
         }
+        if (params.length>1){
+            mCallbackId= Integer.parseInt(params[1]);
+        }
         Intent intent = new Intent(mContext, StartPayActivity.class);
         intent.putExtra(JsConst.INTENT_ORDER_INFO, dataVO.getOrderInfo());
         intent.putExtra(JsConst.INTENT_MODE, dataVO.getMode());
         startActivityForResult(intent, JsConst.REQUEST_CODE_START_PAY_BY_JAR);
-    }
-
-    @Override
-    public void onHandleMessage(Message message) {
-        if(message == null){
-            return;
-        }
-        Bundle bundle=message.getData();
-        switch (message.what) {
-
-            case MSG_START_PAY:
-                startPayMsg(bundle.getStringArray(BUNDLE_DATA));
-                break;
-            default:
-                super.onHandleMessage(message);
-        }
     }
 
     private void callBackPluginJs(String methodName, String jsonData){
@@ -94,6 +67,10 @@ public class EUExUnionPay extends EUExBase {
                 result.setPayResult(JsConst.RESULT_PAY_CANCEL);//取消
             }
         }
-        callBackPluginJs(JsConst.CALLBACK_START_PAY, DataHelper.gson.toJson(result));
-    }
+        if (mCallbackId!=-1){
+            callbackToJs(mCallbackId,false, DataHelper.gson.toJsonTree(result));
+        }else{
+            callBackPluginJs(JsConst.CALLBACK_START_PAY, DataHelper.gson.toJson(result));
+        }
+     }
 }
