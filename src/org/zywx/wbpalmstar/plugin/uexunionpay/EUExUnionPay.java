@@ -14,7 +14,6 @@ import org.zywx.wbpalmstar.plugin.uexunionpay.vo.ResultPayVO;
 
 public class EUExUnionPay extends EUExBase {
 
-    private static final String BUNDLE_DATA = "data";
     private int mCallbackId = -1;
 
     public EUExUnionPay(Context context, EBrowserView eBrowserView) {
@@ -65,10 +64,14 @@ public class EUExUnionPay extends EUExBase {
                 result.setPayResult(JsConst.RESULT_PAY_FAIL);//失败
             }else if( str.equalsIgnoreCase(JsConst.EXTRA_PAY_RESULT_CANCEL) ){
                 result.setPayResult(JsConst.RESULT_PAY_CANCEL);//取消
+            }else{
+                result.setPayResult(JsConst.RESULT_PAY_UNKNOWN_ERROR);
             }
+        }else{
+            result.setPayResult(JsConst.RESULT_PAY_UNKNOWN_ERROR);
         }
         if (mCallbackId!=-1){
-            callbackToJs(mCallbackId,false, DataHelper.gson.toJsonTree(result));
+            callbackToJs(mCallbackId,false, Integer.parseInt(result.getPayResult()));
         }else{
             callBackPluginJs(JsConst.CALLBACK_START_PAY, DataHelper.gson.toJson(result));
         }
