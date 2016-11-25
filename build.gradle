@@ -63,6 +63,7 @@ android {
         applicationId 'org.zywx.wbpalmstar.widgetone.uexUnionPay'
         minSdkVersion 14
         targetSdkVersion 14
+        multiDexEnabled true
     }
     productFlavors {
     }
