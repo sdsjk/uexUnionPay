@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexUnionPay" version="4.0.0" build="1">
-        <info>1:4.0</info>
-        <build>0:UnionPay银联支付插件</build>
+        uexName="uexUnionPay" version="4.0.0" build="0">
+        <info>0:4.0</info>
     </plugin>
 </uexplugins>
