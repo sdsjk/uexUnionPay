@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexUnionPay" version="4.0.2" build="1">
-        <info>0:4.2:升级SDk</info>
+        uexName="uexUnionPay" version="4.4.3" build="1">
+        <info>0:4.3:升级SDk版本</info>
+        <build>0:4.2:升级SDk</build>
         <build>0:4.1:升级SDk</build>
         <build>0:4.0</build>
     </plugin>

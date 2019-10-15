@@ -1,9 +1,13 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.3.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -13,7 +17,7 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
-    compile 'org.appcan:engine:+:systemRelease@aar'
+    compile 'org.appcan:engine:4.4.24'
 }
 
 
@@ -24,11 +28,15 @@ repositories {
     maven {
         url 'https://raw.githubusercontent.com/android-plugin/mvn-repo/master/'
     }
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
 }
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "23.0.0"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     lintOptions {
         abortOnError false
     }
@@ -61,8 +69,8 @@ android {
     }
     defaultConfig {
         applicationId 'org.zywx.wbpalmstar.widgetone.uexUnionPay'
-        minSdkVersion 14
-        targetSdkVersion 14
+        minSdkVersion 18
+        targetSdkVersion 28
         multiDexEnabled true
     }
     productFlavors {
